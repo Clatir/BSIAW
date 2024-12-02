@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Referee{% endblock %}
+{% block static %} 
+<link rel="stylesheet" href="{% static 'referee/spr.css' %}">
+{% endblock %}
+{% block nav %}
+    <li><a href="{% url 'kolegium' %}">Kolegium</a></li>
+    <li><a href="{% url 'set_user' %}">Dodaj Sędziego</a></li>
+    <li><a href="{% url 'kolmecze' %}">Mecze</a></li>
+    <li><a href="/logout">logout</a></li>
+    
+{% endblock %}
+
+{% block content %}
+    <div class="spr-div">
+        <h1>Kolegium</h1>
+        <br>
+        <h2>{{ user.username }}</h2>
+        <br>
+        <h2>{{ user.email }}</h2>
+    </div>
+{% endblock %}

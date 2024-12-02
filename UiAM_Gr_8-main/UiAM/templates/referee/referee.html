@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Referee{% endblock %}
+{% block static %} 
+<link rel="stylesheet" href="{% static 'referee/spr.css' %}">
+{% endblock %}
+{% block nav %}
+    <li><a href="{% url 'referee' %}">Sędzia</a></li>
+    <li><a href="{% url 'listameczy' %}">Mecze</a></li>
+    <li><a href="{% url 'test' %}">Klipy</a></li>
+    <li><a href="{% url 'egzamin' %}">Test</a></li>
+    <li><a href="/logout">logout</a></li>
+    
+{% endblock %}
+
+{% block content %}
+    <div class="spr-div">
+        <h1>Sędzia</h1>
+        <br>
+        <h2>Nazwa użytkownika: {{ user.username }}</h2>
+        <br>
+        <h2>Adres email: {{ user.email }}</h2>
+        <br>
+        <h2>Imię: {{ user.first_name }}</h2>
+        <br>
+        <h2>Nazwisko: {{ user.last_name }}</h2>
+        <br>
+        <a href="{% url 'editusr' %}"><button>Edytuj profil</button></a>
+        <br>
+        <h2>{{  bonus.phone  }}</h2>
+        <br>
+        <a href="{% url 'editusrphon' %}"><button>Edytuj numer telefonu</button></a>
+
+    </div>
+{% endblock %}

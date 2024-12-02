@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+{% block static %} 
+<link rel="stylesheet" href="{% static 'referee/spr.css' %}">
+{% endblock %}
+{% block nav %}
+    <li><a href="referee">Referee</a></li>
+    <li><a href="">Test</a></li>
+    <li><a href="test">Szkolenie</a></li>
+    <li><a href="/logout">logout</a></li>
+{% endblock %}
+{% block content %} 
+<div class="spr-div">
+
+    <h1>Sprawozdanie z meczu piłki nożnej</h1>
+
+    <form action="" method="post">
+        <label for="result">Wynik meczu:</label>
+        <input type="text" id="result" name="result" required>
+
+        <h2>Sklad gospodarzy</h2>
+        <div id="homePlayersContainer">
+            <label for="homePlayerFirstName">Imię:</label>
+            <input type="text" class="playerInput" name="homePlayerFirstNames[]" placeholder="Imię" required>
+
+            <label for="homePlayerLastName">Nazwisko:</label>
+            <input type="text" class="playerInput" name="homePlayerLastNames[]" placeholder="Nazwisko" required>
+
+            <label for="homePlayerNumber">Numer:</label>
+            <input type="text" class="playerInput" name="homePlayerNumbers[]" placeholder="Numer" required>
+        </div>
+        <button type="button" onclick="addPlayer('homePlayersContainer')">Dodaj zawodnika</button>
+
+        <h2>Sklad gosci</h2>
+        <div id="awayPlayersContainer">
+            <label for="awayPlayerFirstName">Imię:</label>
+            <input type="text" class="playerInput" name="awayPlayerFirstNames[]" placeholder="Imię" required>
+
+            <label for="awayPlayerLastName">Nazwisko:</label>
+            <input type="text" class="playerInput" name="awayPlayerLastNames[]" placeholder="Nazwisko" required>
+
+            <label for="awayPlayerNumber">Numer:</label>
+            <input type="text" class="playerInput" name="awayPlayerNumbers[]" placeholder="Numer" required>
+        </div>
+        <button type="button" onclick="addPlayer('awayPlayersContainer')">Dodaj zawodnika</button>
+
+        <h2>Wydarzenia boiskowe</h2>
+
+        <div id="eventsContainer">
+            <label for="event">Wydarzenie:</label>
+            <select name="events[]" required>
+                <option value="goal">Gol</option>
+                <option value="yellowCard">Żółta kartka</option>
+                <option value="redCard">Czerwona kartka</option>
+            </select>
+
+            <label for="team">Drużyna:</label>
+            <select name="teams[]" required>
+                <option value="home">Gospodarze</option>
+                <option value="away">Goście</option>
+            </select>
+
+            <label for="playerNumber">Numer zawodnika:</label>
+            <input type="text" name="playerNumbers[]" required>
+
+            <label for="eventDescription">Opis wydarzenia:</label>
+            <textarea name="eventDescriptions[]" rows="4" required></textarea>
+        </div>
+        <button type="button" onclick="addEvent()">Dodaj wydarzenie</button>
+        <br>
+        <input type="submit" value="Zapisz sprawozdanie">
+    </form>
+
+    <script>
+        function addPlayer(containerId) {
+            var container = document.getElementById(containerId);
+
+            var firstNameInput = document.createElement('input');
+            firstNameInput.type = 'text';
+            firstNameInput.className = 'playerInput';
+            firstNameInput.name = containerId.includes('home') ? 'homePlayerFirstNames[]' : 'awayPlayerFirstNames[]';
+            firstNameInput.placeholder = 'Imię';
+            firstNameInput.required = true;
+
+            var lastNameInput = document.createElement('input');
+            lastNameInput.type = 'text';
+            lastNameInput.className = 'playerInput';
+            lastNameInput.name = containerId.includes('home') ? 'homePlayerLastNames[]' : 'awayPlayerLastNames[]';
+            lastNameInput.placeholder = 'Nazwisko';
+            lastNameInput.required = true;
+
+            var numberInput = document.createElement('input');
+            numberInput.type = 'text';
+            numberInput.className = 'playerInput';
+            numberInput.name = containerId.includes('home') ? 'homePlayerNumbers[]' : 'awayPlayerNumbers[]';
+            numberInput.placeholder = 'Numer';
+            numberInput.required = true;
+
+            container.appendChild(document.createElement('br'));
+            container.appendChild(firstNameInput);
+            container.appendChild(lastNameInput);
+            container.appendChild(numberInput);
+        }
+
+        function addEvent() {
+            var container = document.getElementById('eventsContainer');
+
+            var eventSelect = document.createElement('select');
+            eventSelect.name = 'events[]';
+            eventSelect.required = true;
+            var goalOption = document.createElement('option');
+            goalOption.value = 'goal';
+            goalOption.text = 'Gol';
+            var yellowCardOption = document.createElement('option');
+            yellowCardOption.value = 'yellowCard';
+            yellowCardOption.text = 'Żółta kartka';
+            var redCardOption = document.createElement('option');
+            redCardOption.value = 'redCard';
+            redCardOption.text = 'Czerwona kartka';
+
+            eventSelect.add(goalOption);
+            eventSelect.add(yellowCardOption);
+            eventSelect.add(redCardOption);
+
+            var teamSelect = document.createElement('select');
+            teamSelect.name = 'teams[]';
+            teamSelect.required = true;
+            var homeOption = document.createElement('option');
+            homeOption.value = 'home';
+            homeOption.text = 'Gospodarze';
+            var awayOption = document.createElement('option');
+            awayOption.value = 'away';
+            awayOption.text = 'Goście';
+
+            teamSelect.add(homeOption);
+            teamSelect.add(awayOption);
+
+            var playerNumberInput = document.createElement('input');
+            playerNumberInput.type = 'text';
+            playerNumberInput.name = 'playerNumbers[]';
+            playerNumberInput.required = true;
+
+            var eventDescriptionTextarea = document.createElement('textarea');
+            eventDescriptionTextarea.name = 'eventDescriptions[]';
+            eventDescriptionTextarea.rows = '4';
+            eventDescriptionTextarea.required = true;
+
+            container.appendChild(document.createElement('br'));
+            container.appendChild(eventSelect);
+            container.appendChild(teamSelect);
+            container.appendChild(playerNumberInput);
+            container.appendChild(eventDescriptionTextarea);
+        }
+    </script>
+
+</div>
+{% endblock %}
